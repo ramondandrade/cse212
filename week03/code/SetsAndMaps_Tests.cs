@@ -259,6 +259,7 @@ public class MazeTests
         maze.MoveDown();
         maze.MoveRight();
         Assert.AreEqual("Current location (x=6, y=6)", maze.GetStatus());
+ 
     }
 
     private void AssertThrowsInvalidOperationException(Action action)
@@ -340,6 +341,7 @@ public class EarthquakeDailySummaryTests
 
         foreach (string s in result)
         {
+            Console.WriteLine(s);
             Assert.IsTrue(s.Contains(" - Mag "), "String must contain a magnitude");
         }
     }
