@@ -129,6 +129,7 @@ public class RemoveTests
     {
         var ll = new LinkedList();
 
+        ll.InsertTail(10);
         ll.InsertHead(2);
         ll.InsertHead(2);
         ll.InsertHead(3);
@@ -138,6 +139,8 @@ public class RemoveTests
 
         ll.InsertAfter(3, 35);
         ll.InsertAfter(5, 6);
+
+        ll.RemoveTail();
 
         Assert.AreEqual("<LinkedList>{5, 6, 2, 4, 3, 35, 2, 2}", ll.ToString());
         ll.Remove(3);

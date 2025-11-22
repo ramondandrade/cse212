@@ -1,5 +1,6 @@
 using System.Collections;
 
+// Ramon Andrade - Yeah!
 public class LinkedList : IEnumerable<int>
 {
     private Node? _head;
@@ -32,7 +33,20 @@ public class LinkedList : IEnumerable<int>
     /// </summary>
     public void InsertTail(int value)
     {
-        // TODO Problem 1
+       // TODO Problem 1
+       Node newNode = new(value);
+       if (_tail is null)
+       {    
+            _head = newNode;
+            _tail = newNode;
+       }
+       else
+       {
+            newNode.Prev = _tail; // Connect new node to the previous tail
+            _tail.Next = newNode; // Connect the previous tail to the new node
+            _tail = newNode; // Update the tail to point to the new node
+       }
+  
     }
 
 
@@ -65,6 +79,16 @@ public class LinkedList : IEnumerable<int>
     public void RemoveTail()
     {
         // TODO Problem 2
+        if (_head == _tail)
+        {
+            _head = null;
+            _tail = null;
+        }
+        else if (_tail is not null)
+        {
+            _tail.Prev!.Next = null; // Disconnect the second to last node from the last node
+            _tail = _tail.Prev; // Update the tail to point to the second to last node
+        }
     }
 
     /// <summary>
@@ -108,7 +132,32 @@ public class LinkedList : IEnumerable<int>
     /// </summary>
     public void Remove(int value)
     {
-        // TODO Problem 3
+         // TODO Problem 3
+        Node? curr = _head;  // first is the head node
+        while (curr is not null)
+        {
+            if (curr.Data == value) // find the node to be removed
+            {
+                // if the node to be removed is the head or tail, we can call
+                if (curr == _head)
+                {
+                    RemoveHead();
+                    return; // exit after removing
+                }
+                else if (curr == _tail)
+                {
+                    RemoveTail();
+                    return; // exit after removing
+                }
+                else
+                {
+                    curr.Prev!.Next =  curr.Next; // Connect the previous node to the next node
+                    curr.Next!.Prev = curr.Prev; // Connect the next node to the previous node
+                    return; // exit after removing
+                }
+            }
+            curr = curr.Next; // need relink all nodes, so continue the loop
+        }
     }
 
     /// <summary>
@@ -117,6 +166,15 @@ public class LinkedList : IEnumerable<int>
     public void Replace(int oldValue, int newValue)
     {
         // TODO Problem 4
+        Node? curr = _head;  // first is the head node
+        while (curr is not null)
+        {
+            if (curr.Data == oldValue) // find the node to be replaced
+            {
+                curr.Data = newValue; // replace the value
+            }
+            curr = curr.Next; // move to the next node
+        }   
     }
 
     /// <summary>
@@ -147,7 +205,12 @@ public class LinkedList : IEnumerable<int>
     public IEnumerable Reverse()
     {
         // TODO Problem 5
-        yield return 0; // replace this line with the correct yield return statement(s)
+        var curr = _tail; // Start at the end since this is a backward iteration.
+        while (curr is not null)
+        {
+            yield return curr.Data; // Provide (yield) each item to the user
+            curr = curr.Prev; // Go backward in the linked list
+        }
     }
 
     public override string ToString()
